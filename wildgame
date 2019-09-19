@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--Using the meta viewport value width=device-width instructs the page to match the screen's width in device-independent pixels. This allows the page to reflow content to match different screen sizes, whether rendered on a small mobile phone or a large desktop monitor.-->
+<meta charset="utf-8" />
+<meta name="author" content="Nick Jonas" />
+<meta name="description" content="this is my index page" />
+<meta name="keywords" content="" />
+<meta name="copyright" content="2018" />
+<style>
+.burgerslideshow {display:none;}
+.dropdown{
+  position:relative;
+  display:inline-block;
+}
+
+.dropdown-content{
+  display:none;
+  position:absolute;
+  background-color:#000000;
+  min-width:160px;
+  box-shadow:0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index:1;
+}
+
+.dropdown:hover .dropdown-content{
+  display:block;
+}
+
+.desc{
+  padding:3px;
+  text-align:center;
+  color:#cc6600;
+}
+</style>
+
+<title>Food Truck Menu</title>
+</head>
+
+<body style="background-image:url('images/foodtruckburger.jpeg'); background-repeat:no-repeat; background-size:cover; background-attachment:fixed;" onload='clearForm()'>
+<header style="height:100px; margin:auto; width:75%; border:none;"><img src="images/backwoods.png" alt="logo" style="height:90%; width:75%; display:block; margin:auto;"/>
+</header>
+
+<nav style="margin:auto; width:75%;"> 
+<iframe src="Menu.html" style="width:75%; margin:auto; height:50px; border:none; display:block;"></iframe>
+</nav>
+
+<script>
+alert("Welcome to Jonasty's Backwoods Burgers Food Truck Menu!") 
+</script>
+
+<div class="burgers" style="margin:auto; text-align:center; float:right;">
+  <img class="burgerslideshow" src="images/beefburger.jpg" alt="beef" style="width:700px; height:500px;">
+  <img class="burgerslideshow" src="images/venison.jpg" alt="deer" style="width:700px; height:500px;">
+  <img class="burgerslideshow" src="images/duckburger.jpg" alt="duck" style="width:700px; height:500px;">
+  <img class="burgerslideshow" src="images/elk.jpeg" alt="elk" style="width:700px; height:500px;">
+  <img class="burgerslideshow" src="images/ostrichburger.jpg" alt="ostrich" style="width:700px; height:500px;">
+<br>
+<h3><img src="images/backmusicheader.png" alt="logo" style="height:90%; width:75%"/></h3>
+<audio controls autoplay>
+  <source src="audio/backmusic.mp3" type="audio/mp3">
+</audio>
+</div>
+
+<script>
+var slideIndex = 0;
+carousel();
+
+function carousel() {
+    var i;
+    var x = document.getElementsByClassName("burgerslideshow");
+    for (i = 0; i < x.length; i++) {
+      x[i].style.display = "none";
+    }
+    slideIndex++;
+    if (slideIndex > x.length) {slideIndex = 1}
+    x[slideIndex-1].style.display = "block";
+    setTimeout(carousel, 4000);
+}
+</script>
+
+<script>
+var burger_prices = new Array();
+burger_prices["Beef Burger"] = 5.49;
+burger_prices["Venison Burger"] = 5.99;
+burger_prices["Elk Burger"] = 6.99;
+burger_prices["Duck Burger"] = 6.49;
+burger_prices["Ostrich Burger"] = 6.99;
+
+function getBurgerPrice()
+{
+    var BurgerPrice = 0;
+    var theForm = document.forms["ordermenu"];
+    var Meat = theForm.elements["Meat"];
+
+    for(var i = 0; i < Meat.length; i++)
+    {
+        if(Meat[i].checked)
+        {
+         BurgerPrice = burger_prices[Meat[i].value];
+         break;
+        }
+    }
+    return BurgerPrice;
+}
+
+function condimentPrice()
+{
+    var condimentPrice = 0;
+    var theForm = document.forms["ordermenu"];
+    var BaconAddOn = theForm.elements["BaconAddOn"];
+	
+    if(BaconAddOn.checked==true){
+        condimentPrice = .99;
+    }
+    return condimentPrice;
+}
+
+ function cheesePrice()
+{
+    var cheesePrice = 0;
+    var theForm = document.forms["ordermenu"];
+    var SmokedGouda = theForm.elements["SmokedGouda"];
+	
+    if(SmokedGouda.checked==true){
+        cheesePrice = .99;
+    }
+    return cheesePrice;
+}
+ 
+function calculateTotal()
+{
+	var salesTax = .0875;
+ 	var BurgerPrice = getBurgerPrice() + condimentPrice() + cheesePrice() + salesTax;
+    var divobj = document.getElementById('totalPrice');
+    divobj.style.display = 'block';
+    divobj.innerHTML = "Order Total After Tax:   $" + parseFloat(BurgerPrice.toFixed(2)); 
+}
+
+function hideTotal()
+{
+    var divobj = document.getElementById('totalPrice');
+    divobj.style.display='none';
+}
+
+function clearForm()
+{
+    var divobj = document.getElementById('ordermenu').reset();
+    divobj.style.display='none';
+}
+</script>
+<p></p>
+
+<div style="background-image:linear-gradient(#669966,grey); color:#ffffff; height:50%; font-family:Comic Sans MS; font-size:1em; width:45%; opacity:.75; border:2px solid black;" id="top">
+<h1 style="text-align:center;"><img src="images/backwoodsmenu.png" alt="menu" style="width:75%;"/></h1>
+
+<form action="echo.php" method="post" id="ordermenu" >
+<fieldset>
+<p><b><u>Choose your meat:</u></b></p>
+<div class="dropdown">
+  <img src="images/cow.png" alt="cow" style="width:80px; height:80px;">
+  <div class="dropdown-content">
+  <img src="images/beefburger.jpg" alt="beef" style="width:300px; height:250px;">
+  <div class="desc">Classic Choice Beef - $5.49</div>
+   </div><input type="radio" name="Meat" value="Beef Burger" checked > &nbsp; &nbsp;
+</div>
+<div class="dropdown">
+  <img src="images/deer.png" alt="wildgame1" style="width:80px; height:80px;">
+  <div class="dropdown-content">
+  <img src="images/venison.jpg" alt="venison" style="width:300px; height:250px;">
+  <div class="desc">Lean & Juicy Venison - $5.99</div>
+   </div><input type="radio" name="Meat" value="Venison Burger"> &nbsp; &nbsp;
+</div>
+<div class="dropdown">
+  <img src="images/elk.png" alt="wildgame2" style="width:80px; height:80px;">
+  <div class="dropdown-content">
+  <img src="images/elk.jpeg" alt="elk" style="width:300px; height:250px;">
+  <div class="desc">Delectable Elk - $6.99</div>
+   </div><input type="radio" name="Meat" value="Elk Burger"> &nbsp; &nbsp;
+</div>
+<div class="dropdown">
+  <img src="images/duck.png" alt="bird1" style="width:80px; height:80px;">
+  <div class="dropdown-content">
+  <img src="images/duckburger.jpg" alt="duck" style="width:300px; height:250px;">
+  <div class="desc">Savory Duck - $6.49</div>
+   </div><input type="radio" name="Meat" value="Duck Burger"> &nbsp; &nbsp;
+</div>
+<div class="dropdown">
+  <img src="images/ostrich.png" alt="bird2" style="width:80px; height:80px;">
+  <div class="dropdown-content">
+  <img src="images/ostrichburger.jpg" alt="ostrich" style="width:300px; height:250px;">
+  <div class="desc">Exquisite Ostrich - $6.99</div>
+   </div><input type="radio" name="Meat" value="Ostrich Burger">
+</div>
+<br><br>
+<p><b><u>Choose your roll:</u></b></p>
+<div class="dropdown">
+  <img src="images/whiteroll.png" alt="whiteroll" style="width:80px; height:80px;">
+  <div class="dropdown-content">
+  <img src="images/whiteroll.png" alt="whiteroll" style="width:300px; height:250px;">
+  <div class="desc">White Roll</div>
+   </div><input type="radio" name="Roll" value="White" checked > &nbsp; &nbsp;
+</div>
+<div class="dropdown">
+  <img src="images/wheatroll.png" alt="wheatroll" style="width:80px; height:80px;">
+  <div class="dropdown-content">
+  <img src="images/wheatroll.png" alt="wheatroll" style="width:300px; height:250px;">
+  <div class="desc">Wheat Roll</div>
+   </div><input type="radio" name="Roll" value="Wheat"> &nbsp; &nbsp;
+</div>
+<div class="dropdown">
+  <img src="images/sesameroll.png" alt="sesameroll" style="width:80px; height:80px;">
+  <div class="dropdown-content">
+  <img src="images/sesameroll.png" alt="sesameroll" style="width:300px; height:250px;">
+  <div class="desc">Sesame Seed Roll</div>
+   </div><input type="radio" name="Roll" value="Sesame Seed"> &nbsp; &nbsp;
+</div>
+<div class="dropdown">
+  <img src="images/ryeroll.png" alt="ryeroll" style="width:80px; height:80px;">
+  <div class="dropdown-content">
+  <img src="images/ryeroll.png" alt="ryeroll" style="width:300px; height:250px;">
+  <div class="desc">Rye Roll</div>
+   </div><input type="radio" name="Roll" value="Rye"> &nbsp; &nbsp;
+</div>
+<div class="dropdown">
+  <img src="images/poppyroll.png" alt="poppyroll" style="width:80px; height:80px;">
+  <div class="dropdown-content">
+  <img src="images/poppyroll.png" alt="poppyroll" style="width:300px; height:250px;">
+  <div class="desc">Poppy Seed Roll</div>
+   </div><input type="radio" name="Roll" value="Poppy Seed"> 
+</div>
+<br><br>
+<p><b><u>Choose your cheese:</u></b></p>
+<div class="dropdown">
+  <img src="images/american.png" alt="american" style="width:80px; height:80px;">
+  <div class="dropdown-content">
+  <img src="images/american.png" alt="american" style="width:300px; height:250px;">
+  <div class="desc">American Cheese</div>
+   </div><input type="radio" name="Cheese" value="American" checked > &nbsp; &nbsp;
+</div>
+<div class="dropdown">
+  <img src="images/cheddar.gif" alt="cheddar" style="width:80px; height:80px;">
+  <div class="dropdown-content">
+  <img src="images/cheddar.gif" alt="cheddar" style="width:300px; height:250px;">
+  <div class="desc">Cheddar Cheese</div>
+   </div><input type="radio" name="Cheese" value="Cheddar"> &nbsp; &nbsp;
+</div>
+<div class="dropdown">
+  <img src="images/provolone.png" alt="provolone" style="width:80px; height:80px;">
+  <div class="dropdown-content">
+  <img src="images/provolone.png" alt="provolone" style="width:300px; height:250px;">
+  <div class="desc">Provolone Cheese</div>
+   </div><input type="radio" name="Cheese" value="Provolone"> &nbsp; &nbsp;
+</div>
+<div class="dropdown">
+  <img src="images/swiss.png" alt="swiss" style="width:80px; height:80px;">
+  <div class="dropdown-content">
+  <img src="images/swiss.png" alt="swiss" style="width:300px; height:250px;">
+  <div class="desc">Swiss Cheese</div>
+   </div><input type="radio" name="Cheese" value="Swiss"> &nbsp; &nbsp;
+</div>
+<div class="dropdown">
+  <img src="images/smokedgouda.png" alt="smokedgouda" style="width:80px; height:80px;">
+  <div class="dropdown-content">
+  <img src="images/smokedgouda.png" alt="smokedgouda" style="width:300px; height:250px;">
+  <div class="desc">Smoked Gouda Cheese<br>(Additional $0.99)</div>
+   </div><input type="radio" id="SmokedGouda" name="Cheese" value="Smoked Gouda"> 
+</div>
+<br><br>
+<p><b><u>Select your condiments:</u></b></p>
+Ketchup:<input type="checkbox" name="AddItem1" value="Ketchup"><br/>
+Mustard:<input type="checkbox" name="AddItem2" value="Mustard"><br/>
+BBQ Sauce:<input type="checkbox" name="AddItem3" value="BBQ Sauce"><br/>
+Lettuce:<input type="checkbox" name="AddItem4" value="Lettuce"><br/>
+Tomato:<input type="checkbox" name="AddItem5" value="Tomato"><br/>
+Onion:<input type="checkbox" name="AddItem6" value="Onion"><br/>
+Pickle:<input type="checkbox" name="AddItem7" value="Pickle"><br/>
+Bacon(Additional $0.99):<input type="checkbox" id="BaconAddOn" name="AddItem8" value="Bacon"><br/>
+Mushrooms:<input type="checkbox" name="AddItem9" value="Mushrooms">
+<p style="color:#000000; text-align:center;"><b><i>***Each order comes with a side of french fries and a drink.***</i></b></p> 
+Select your beverage:<select name="Beverages">
+<optgroup label="Available Beverages">
+<option>Water</option>
+<option>Juice</option>
+<option>Iced Tea</option>
+<option>Cola</option>
+</optgroup>
+</select>
+<br><br>
+Special Instructions:<br>
+<textarea name="Special Instructions" rows="15" cols="40"></textarea><br>
+<br><br>
+Contact Details:<br>
+<label for='name'>Name:</label>
+<input type="text" id="name" name='Name'/>
+<br/>
+<label for='address'>Address:</label>
+<input type="text" id="address" name='Address'/>
+<br/>
+<label for='phonenumber'>Phone:</label>
+<input type="text" id="phonenumber" name='Phone Number'/>
+<br/><br>
+<div style="color:#000000; text-align:center;" id="totalPrice"></div><br>
+<input style="margin:auto; display:block;" type="reset" value="Clear All" onclick="hideTotal()"/>
+<input style="margin:auto; display:block;" type='button' id='submit' value='Calculate Total' onclick="calculateTotal();"/>
+<input style="margin:auto; display:block;" type='submit' value='Proceed to Checkout' onclick="form.submit();"/>
+</fieldset>
+</form>
+</div> 
+<br><br><br>
+
+<footer style= "background-image:linear-gradient(#ccccff,grey); margin:auto; width:75%; text-align:center; border:2px solid black;">
+<h3 style="text-align:center;">Web Master: Nick Jonas <br/> Created: 12/4/2018 </h3>
+<a href="http://jigsaw.w3.org/css-validator/check/referer"><img style="border:0; width:88px; height:31px; float:left;" src="//jigsaw.w3.org/css-validator/images/vcss" alt="Valid CSS!"/></a>
+<a href="mailto:nicholas.jonas52@gmail.com?subject=InformationPlease!&body=Hello!">
+<img src="images/email.png" alt="email logo" style="height:50px; width:60px"></a>
+<a href="#top"><img src="images/top.png" alt="top logo" style="height:45px; width:45px;"></a>
+<a href="http://jigsaw.w3.org/css-validator/check/referer"><img style="border:0; width:88px; height:31px; float:right;" src="//jigsaw.w3.org/css-validator/images/vcss-blue" alt="Valid CSS!"/></a>
+</footer>
+
+</body>
+</html>
